@@ -10,7 +10,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch("http://localhost:3001/goals")
+    fetch("https://test-app-090.onrender.com")
       .then((res) => res.json())
       .then(setGoals)
       .catch((error) => console.error("Failed to fetch goals:", error));
@@ -28,7 +28,7 @@ function App() {
 
 
   const handleEditGoal = (updatedGoal) => {
-    fetch(`http://localhost:3001/goals/${updatedGoal.id}`, {
+    fetch(`https://test-app-090.onrender.com/${updatedGoal.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

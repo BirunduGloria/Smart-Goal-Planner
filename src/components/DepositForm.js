@@ -23,7 +23,7 @@ function DepositForm({ goals, onDeposit }) {
 
     const updatedSavedAmount = goal.savedAmount + depositAmount;
 
-    fetch(`http://localhost:3001/goals/${goal.id}`, {
+    fetch(`https://test-app-090.onrender.com'/${goal.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"

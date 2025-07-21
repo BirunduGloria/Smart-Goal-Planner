@@ -1,3 +1,28 @@
 {
-  "goals": []
+  "goals": [
+    {
+      "id": 1,
+      "name": "New Laptop",
+      "targetAmount": 1000,
+      "savedAmount": 200,
+      "category": "Tech",
+      "deadline": "2025-09-01"
+    },
+    {
+      "id": "921b",
+      "name": "Travel Fund - Japan",
+      "targetAmount": "180000",
+      "savedAmount": "99996",
+      "category": "Travel",
+      "deadline": "2025-10-04"
+    },
+    {
+      "id": "5323",
+      "name": "Down Payment - House",
+      "targetAmount": "150000",
+      "savedAmount": "80000",
+      "category": "Real Estate",
+      "deadline": "2025-11-22"
+    }
+  ]
 }

@@ -4,39 +4,38 @@ import GoalForm from "./components/GoalForm";
 import DepositForm from "./components/DepositForm";
 import GoalOverview from "./components/GoalOverview";
 
-const API = "http://localhost:3000/goals";
-
 function App() {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    fetch(API)
-      .then((res) => res.json())
-      .then(setGoals)
-      .catch(console.error);
-  }, []);
+  fetch("http://localhost:3001/goals")
+    .then((r) => r.json())
+    .then((data) => setGoals(data))
+    .catch((error) => console.error("Fetch failed:", error));
+}, []);
 
-  const addGoal = (newGoal) => setGoals([...goals, newGoal]);
+  function addGoal(newGoal) {
+    setGoals([...goals, newGoal]);
+  }
 
-  const updateGoal = (updatedGoal) => {
-    setGoals(goals.map(goal => goal.id === updatedGoal.id ? updatedGoal : goal));
-  };
+  function updateGoal(updatedGoal) {
+    const updatedGoals = goals.map((goal) =>
+      goal.id === updatedGoal.id ? updatedGoal : goal
+    );
+    setGoals(updatedGoals);
+  }
 
-  const deleteGoal = (id) => {
-    setGoals(goals.filter(goal => goal.id !== id));
-  };
+  function deleteGoal(id) {
+    setGoals(goals.filter((goal) => goal.id !== id));
+  }
 
   return (
-    <div className="container">
-      <h1>🎯 Smart Goal Planner</h1>
-      <GoalForm onAdd={addGoal} />
-      <DepositForm goals={goals} onDeposit={updateGoal} />
+    <div className="App">
+      <h1>Smart Goal Planner</h1>
       <GoalOverview goals={goals} />
-      <GoalList
-        goals={goals}
-        onUpdate={updateGoal}
-        onDelete={deleteGoal}
-      />
+      <GoalForm onAddGoal={addGoal} />
+      <DepositForm goals={goals} onDeposit={updateGoal} />
+      <GoalList goals={goals} onUpdate={updateGoal} onDelete={deleteGoal} />
     </div>
   );
 }

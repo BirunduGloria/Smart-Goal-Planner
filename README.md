@@ -72,7 +72,7 @@ smart-goal-planner/
 ├── db.json
 ├── package.json
 └── README.md
-⚙️ Getting Started
+ Getting Started
 1. Clone the Repo
 bash
 Copy
@@ -128,10 +128,10 @@ Copy
 Edit
 onDeposit(updatedGoal)
 
-✍ Author
+Author
 Gloria Birundu
 GitHub | Moringa School
 
-📃License
+License
 This project is for educational purposes under the MIT License.
 

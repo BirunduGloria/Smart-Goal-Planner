@@ -6,7 +6,7 @@ A **React-based financial goal tracking app** that helps users create, manage, a
 
 ## Live Demo
 
-🌐 [Click here to view the live app]((https://test-app-090.onrender.com))
+ [Click here to view the live app]((https://test-app-090.onrender.com))
 
 
 ##Features

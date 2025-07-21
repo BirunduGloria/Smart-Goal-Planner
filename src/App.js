@@ -1,41 +1,71 @@
 import React, { useEffect, useState } from "react";
-import GoalList from "./components/GoalList";
 import GoalForm from "./components/GoalForm";
-import DepositForm from "./components/DepositForm";
+import GoalList from "./components/GoalList";
 import GoalOverview from "./components/GoalOverview";
+import DepositForm from "./components/DepositForm"; 
+import "./App.css";
 
 function App() {
   const [goals, setGoals] = useState([]);
 
+
   useEffect(() => {
-  fetch("http://localhost:3001/goals")
-    .then((r) => r.json())
-    .then((data) => setGoals(data))
-    .catch((error) => console.error("Fetch failed:", error));
-}, []);
+    fetch("http://localhost:3001/goals")
+      .then((res) => res.json())
+      .then(setGoals)
+      .catch((error) => console.error("Failed to fetch goals:", error));
+  }, []);
 
-  function addGoal(newGoal) {
+  
+  const handleAddGoal = (newGoal) => {
     setGoals([...goals, newGoal]);
-  }
+  };
 
-  function updateGoal(updatedGoal) {
+
+  const handleDeleteGoal = (goalId) => {
+    setGoals(goals.filter((goal) => goal.id !== goalId));
+  };
+
+
+  const handleEditGoal = (updatedGoal) => {
+    fetch(`http://localhost:3001/goals/${updatedGoal.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedGoal)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const updatedGoals = goals.map((goal) =>
+          goal.id === data.id ? data : goal
+        );
+        setGoals(updatedGoals);
+      });
+  };
+
+
+  const handleDeposit = (updatedGoal) => {
     const updatedGoals = goals.map((goal) =>
       goal.id === updatedGoal.id ? updatedGoal : goal
     );
     setGoals(updatedGoals);
-  }
-
-  function deleteGoal(id) {
-    setGoals(goals.filter((goal) => goal.id !== id));
-  }
+  };
 
   return (
     <div className="App">
       <h1>Smart Goal Planner</h1>
+
+      <GoalForm onAddGoal={handleAddGoal} />
       <GoalOverview goals={goals} />
-      <GoalForm onAddGoal={addGoal} />
-      <DepositForm goals={goals} onDeposit={updateGoal} />
-      <GoalList goals={goals} onUpdate={updateGoal} onDelete={deleteGoal} />
+
+      <DepositForm goals={goals} onDeposit={handleDeposit} /> {/* ✅ Added */}
+
+      <GoalList
+        goals={goals}
+        onDelete={handleDeleteGoal}
+        onEdit={handleEditGoal}
+      />
     </div>
   );
 }

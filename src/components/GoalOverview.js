@@ -33,7 +33,7 @@ function GoalOverview({ goals }) {
           } else if (timeLeft < 0) {
             status = " Overdue!";
           } else if (timeLeft <= 30) {
-            status = `⚠️ ${timeLeft} days left`;
+            status = `${timeLeft} days left`;
           } else {
             status = `${timeLeft} days left`;
           }

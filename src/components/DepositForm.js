@@ -1,63 +1,57 @@
 import React, { useState } from "react";
 
 function DepositForm({ goals, onDeposit }) {
-  const [goalId, setGoalId] = useState("");
+  const [selectedGoalId, setSelectedGoalId] = useState("");
   const [amount, setAmount] = useState("");
-  const selectedGoal = goals.find((g) => String(g.id) === goalId);
-
-
-  console.log("Goal ID from select:", goalId);             // e.g. "2"
-console.log("Goals list:", goals);                       // entire goals array
-console.log("Parsed Goal ID:", Number(goalId));          // e.g. 2
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    const goalIdNum = Number(goalId);
-    if (!goalIdNum || !amount) {
-      alert("Please select a valid goal and enter an amount.");
+    const goalId = parseInt(selectedGoalId); // Convert to number
+    const goal = goals.find((g) => g.id === goalId);
+
+    if (!goal) {
+      alert("Please select a valid goal.");
       return;
     }
 
-    const selectedGoal = goals.find((g) => g.id === goalIdNum);
-    if (!selectedGoal) {
-      alert("Goal not found.");
+    const depositAmount = parseFloat(amount);
+    if (isNaN(depositAmount) || depositAmount <= 0) {
+      alert("Please enter a valid deposit amount.");
       return;
     }
 
-    const newSavedAmount = Number(selectedGoal.savedAmount) + Number(amount);
+    const updatedSavedAmount = goal.savedAmount + depositAmount;
 
-    fetch(`http://localhost:3000/goals/${selectedGoal.id}`, {
+    fetch(`http://localhost:3001/goals/${goal.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ savedAmount: newSavedAmount })
+      body: JSON.stringify({ savedAmount: updatedSavedAmount })
     })
       .then((res) => res.json())
       .then((updatedGoal) => {
         onDeposit(updatedGoal);
         setAmount("");
-        setGoalId("");
+        setSelectedGoalId("");
       })
-      .catch((err) => {
-        console.error("Deposit failed:", err);
-        alert("Something went wrong. Try again.");
+      .catch((error) => {
+        alert("Deposit failed. Try again.");
+        console.error("Deposit error:", error);
       });
   }
 
   return (
-    <form onSubmit={handleSubmit} className="deposit-form">
-      <h2>Make a Deposit</h2>
+    <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
+      <h3>Make a Deposit</h3>
 
-      <label htmlFor="goal">Select Goal:</label>
       <select
-        id="goal"
-        value={goalId}
-        onChange={(e) => setGoalId(e.target.value)}
+        value={selectedGoalId}
+        onChange={(e) => setSelectedGoalId(e.target.value)}
         required
       >
-        <option value="">-- Choose a Goal --</option>
+        <option value="">-- Select Goal --</option>
         {goals.map((goal) => (
           <option key={goal.id} value={goal.id}>
             {goal.name}
@@ -65,13 +59,13 @@ console.log("Parsed Goal ID:", Number(goalId));          // e.g. 2
         ))}
       </select>
 
-      <label htmlFor="amount">Amount:</label>
       <input
         type="number"
-        id="amount"
+        placeholder="Deposit Amount"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
         min="1"
+        step="any"
         required
       />
 

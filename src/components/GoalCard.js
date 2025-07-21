@@ -1,31 +1,43 @@
 import React from "react";
 
-function GoalCard({ goal, onEdit, onDelete }) {
-  const { id, name, description, targetAmount, savedAmount } = goal;
 
-  const remaining = targetAmount - savedAmount;
-  const percentage = Math.min((savedAmount / targetAmount) * 100, 100); 
+function GoalCard({ goal, onDelete, onEdit }) {
+  const handleEditClick = () => {
+    const newTitle = prompt("Edit goal name:", goal.name);
+    const newDescription = prompt("Edit description:", goal.description);
+
+    if (newTitle && newDescription) {
+      const updatedGoal = {
+        ...goal,
+        name: newTitle,
+        description: newDescription
+      };
+      onEdit(updatedGoal);
+    }
+  };
+
+  const percentage = Math.min(
+    (goal.savedAmount / goal.targetAmount) * 100,
+    100
+  ).toFixed(1);
+
+  const remaining = Math.max(goal.targetAmount - goal.savedAmount, 0);
 
   return (
     <div className="goal-card">
-      <h3>{name}</h3>
-      <p>{description}</p>
-      <p><strong>Target:</strong> KES {targetAmount.toLocaleString()}</p>
-      <p><strong>Saved:</strong> KES {savedAmount.toLocaleString()}</p>
+      <h3>{goal.name}</h3>
+      <p>{goal.description}</p>
+      <p><strong>Target:</strong> KES {goal.targetAmount.toLocaleString()}</p>
+      <p><strong>Saved:</strong> KES {goal.savedAmount.toLocaleString()}</p>
       <p><strong>Remaining:</strong> KES {remaining.toLocaleString()}</p>
 
-  
-      <div className="progress-bar-container">
-        <div
-          className="progress-bar-fill"
-          style={{ width: `${percentage}%` }}
-        >
-          {Math.floor(percentage)}%
-        </div>
+      <div className="progress-bar">
+        <div className="fill" style={{ width: `${percentage}%` }} />
       </div>
+      <p><strong>Progress:</strong> {percentage}%</p>
 
-      <button onClick={() => onEdit(goal)}>Edit</button>
-      <button onClick={() => onDelete(id)}>Delete</button>
+      <button onClick={() => onDelete(goal.id)}>Delete</button>
+      <button onClick={handleEditClick}>Edit</button>
     </div>
   );
 }

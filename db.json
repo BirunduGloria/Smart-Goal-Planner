@@ -1,7 +1,7 @@
 {
   "goals": [
     {
-      "id": 1,
+      "id": "1",
       "name": "New Laptop",
       "targetAmount": 1000,
       "savedAmount": 200,
@@ -14,7 +14,8 @@
       "targetAmount": "180000",
       "savedAmount": "99996",
       "category": "Travel",
-      "deadline": "2025-10-04"
+      "deadline": "2025-10-04",
+      "description": "gggg"
     },
     {
       "id": "5323",
@@ -23,6 +24,51 @@
       "savedAmount": "80000",
       "category": "Real Estate",
       "deadline": "2025-11-22"
+    },
+    {
+      "id": "1782",
+      "name": "Travel Fund - Japan",
+      "description": "KK Motors",
+      "targetAmount": 50000,
+      "savedAmount": 10000,
+      "category": "Travel",
+      "deadline": "2025-08-01"
+    },
+    {
+      "id": "3e37",
+      "name": "Travel Fund - Japan",
+      "description": "Nairobi",
+      "targetAmount": 50000,
+      "savedAmount": 10000,
+      "category": "Savings",
+      "deadline": "2025-08-01"
+    },
+    {
+      "id": "e2aa",
+      "name": "Travel Fund- New York",
+      "description": "By myself",
+      "targetAmount": 150000,
+      "savedAmount": 80000,
+      "category": "Travel",
+      "deadline": "2025-10-31"
+    },
+    {
+      "id": "617d",
+      "name": "Buy a car",
+      "description": "Mazda Atenza",
+      "targetAmount": 2400000,
+      "savedAmount": 700000,
+      "category": "Investment",
+      "deadline": "2026-02-06"
+    },
+    {
+      "id": "9eba",
+      "name": "gloria",
+      "description": "Nairobi",
+      "targetAmount": 12000,
+      "savedAmount": 3000,
+      "category": "Savings",
+      "deadline": "2025-08-02"
     }
   ]
 }

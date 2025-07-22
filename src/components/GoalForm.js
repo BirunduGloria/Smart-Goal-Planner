@@ -29,24 +29,21 @@ function GoalForm({ onAddGoal, editingGoal, onUpdateGoal }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const goalData = {
-      ...formData,
+    const newGoal = {
+      name: formData.name,
+      description: formData.description,
+      category: formData.category,
       targetAmount: parseFloat(formData.targetAmount),
       savedAmount: parseFloat(formData.savedAmount),
+      deadline: formData.deadline,
     };
 
-    const url = editingGoal
-      ? "https://test-app-090.onrender.com/${editingGoal.id}"
-      : "https://test-app-090.onrender.com";
-
-    const method = editingGoal ? "PATCH" : "POST";
-
-    fetch(url, {
-      method,
+    fetch("https://test-app-090.onrender.com/goals", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(goalData),
+      body: JSON.stringify(newGoal),
     })
       .then((res) => {
         if (!res.ok) {
@@ -54,17 +51,13 @@ function GoalForm({ onAddGoal, editingGoal, onUpdateGoal }) {
         }
         return res.json();
       })
-      .then((savedGoal) => {
-        if (editingGoal) {
-          onUpdateGoal(savedGoal);
-        } else {
-          onAddGoal(savedGoal);
-        }
+      .then((data) => {
+        onAddGoal(data);
         setFormData(initialFormState);
       })
-      .catch((error) => {
-        console.error("Error submitting goal:", error);
-        alert("Failed to submit goal. Please check if the server is running.");
+      .catch((err) => {
+        console.error("Error submitting goal:", err);
+        alert("Failed to save goal. Please check if the server is running or if the URL is correct.");
       });
   }
 

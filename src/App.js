@@ -10,11 +10,19 @@ function App() {
 
 
   useEffect(() => {
-    fetch("https://test-app-090.onrender.com")
-      .then((res) => res.json())
-      .then(setGoals)
-      .catch((error) => console.error("Failed to fetch goals:", error));
-  }, []);
+  fetch("https://test-app-090.onrender.com/goals")
+    .then((r) => {
+      if (!r.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return r.json();
+    })
+    .then(setGoals)
+    .catch((error) => {
+      console.error("Failed to fetch goals:", error);
+    });
+}, []);
+
 
   
   const handleAddGoal = (newGoal) => {

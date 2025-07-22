@@ -36,7 +36,7 @@ function GoalForm({ onAddGoal, editingGoal, onUpdateGoal }) {
     };
 
     const url = editingGoal
-      ? 'https://test-app-090.onrender.com/${editingGoal.id}`
+      ? "https://test-app-090.onrender.com/${editingGoal.id}"
       : "https://test-app-090.onrender.com";
 
     const method = editingGoal ? "PATCH" : "POST";
